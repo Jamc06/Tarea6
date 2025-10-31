@@ -37,21 +37,27 @@ public class Drone extends Device implements Measurable, Actionable, Loggable {
     }
 
     @Override
-    public String performAction(String action) {
-        String lower = action.toLowerCase().trim();
-        if (lower.startsWith("capture")) {
-            // capture multispectral image 
+public String performAction(String action) {
+    String lower = action.toLowerCase().trim();
+
+    switch (lower) {
+        case "open":
+            return "Drone camera opened.";
+        case "close":
+            return "Drone camera closed.";
+        case "capture":
             batteryLevel = Math.max(0, batteryLevel - 2.5);
             return "Drone captured multispectral images.";
-        } else if (lower.startsWith("spray")) {
+        case "spray":
             batteryLevel = Math.max(0, batteryLevel - 5.0);
             return "Drone performed spraying action.";
-        } else if (lower.startsWith("return")) {
+        case "return":
             batteryLevel = Math.max(0, batteryLevel - 1.0);
             return "Drone returning to base.";
-        }
-        return "Action not supported by Drone.";
+        default:
+            return "Action not supported by Drone.";
     }
+}
 
     @Override
     public String register() {
